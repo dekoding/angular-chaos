@@ -8,7 +8,7 @@
 </div>
 <div class="search-container">
     <mat-form-field color="primary">
-        <input matInput placeholder="Type in a Name and Go!">
+        <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Type in a Name and Go!">
     </mat-form-field>
 </div>
 <app-chaos-table></app-chaos-table>
