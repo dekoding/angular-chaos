@@ -1,0 +1,123 @@
+<div class="table-container mat-elevation-z8">
+  <mat-table matSort #table [dataSource]="dataSource">
+
+    <!--- Note that these columns can be defined in any order.
+          The actual rendered columns are set as a property on the row definition" -->
+
+        <ng-container matColumnDef="name">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Name</mat-header-cell>
+          <mat-cell *matCellDef="let element">
+              <div class="dittohead">
+                  <img src="../../assets/images/{{element.Image}}.JPG"/>
+                  <span class="upper">{{element.LastName}}, {{element.FirstName}}</span>
+              </div>
+          </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="affiliation">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Affiliation </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.Affiliation}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="position">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Position </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.Position}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="hired">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Hired </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.DateHired}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="left">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Left </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.DateLeft}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="totalDays">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Total Days </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.TotalTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="daysUnderTrump">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Under Trump </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.TrumpTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="mooches">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Mooches </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.MoochesTime}} </mat-cell>
+        </ng-container>
+
+        <ng-container matColumnDef="firedOrResigned">
+          <mat-header-cell *matHeaderCellDef mat-sort-header> Fired/Resign </mat-header-cell>
+          <mat-cell *matCellDef="let element"> {{element.LeaveType}} </mat-cell>
+        </ng-container>
+
+        <!-- Expanded Content Column - The detail row is made up of this one column -->
+        <ng-container matColumnDef="expandedDetail">
+            <mat-cell class="dittohead-container" *matCellDef="let detail" [attr.colspan]="9">
+                <div class="dittohead-detail mat-elevation-z8">
+                    <mat-card class="dittohead-card">
+                        <mat-card-header>
+                            <mat-card-title>
+                                {{detail.element.FirstName}} {{detail.element.LastName}}
+                            </mat-card-title>
+                        </mat-card-header>
+                            <img mat-card-image
+                                src="../../assets/images/{{detail.element.Image}}.JPG"
+                                alt="Photo of {{detail.element.FirstName}} {{detail.element.LastName}}"
+                            />
+                        <mat-card-content>
+                            <p>
+                                {{detail.element.Position}}
+                            </p>
+                        </mat-card-content>
+                    </mat-card>
+                    <div class="dittohead-stats">
+                        <mat-card>
+                            <span class="mat-body-strong">Affiliation:</span> {{detail.element.Affiliation}}
+                        </mat-card>
+                        <mat-card>
+                            <span class="mat-body-strong">Hired:</span> {{detail.element.DateHired}}
+                        </mat-card>
+                        <mat-card>
+                            <span class="mat-body-strong">Affiliation:</span> {{detail.element.Affiliation}}
+                        </mat-card>
+                        <mat-card>
+                            <span class="mat-body-strong">Date Left:</span> {{detail.element.DateLeft}}
+                        </mat-card>
+                        <mat-card>
+                            <span class="mat-body-strong">Fired / Resigned:</span> {{detail.element.LeaveType}}
+                        </mat-card>
+                    </div>
+                    <div class="dittohead-stats">
+                        <mat-card>
+                            <span class="mat-body-strong">Total Days:</span> {{detail.element.TotalTime}}
+                        </mat-card>
+                        <mat-card>
+                            <span class="mat-body-strong">Under Trump:</span> {{detail.element.TrumpTime}}
+                        </mat-card>
+                        <mat-card>
+                            <span class="mat-body-strong">Mooches:</span> {{detail.element.MoochesTime}}
+                        </mat-card>
+                        <mat-card>
+                            <span class="mat-body-strong">Notes:</span> {{detail.element.Notes}}
+                        </mat-card>
+                    </div>
+                </div>
+            </mat-cell>
+        </ng-container>
+
+    <mat-header-row *matHeaderRowDef="displayedColumns"></mat-header-row>
+    <mat-row *matRowDef="let row; columns: displayedColumns;"
+
+            class="element-row"
+            [class.expanded]="expandedElement == row"
+            (click)="expandedElement = row"></mat-row>
+    <mat-row *matRowDef="let row; columns: ['expandedDetail']; when: isExpansionDetailRow"
+            [@detailExpand]="row.element == expandedElement ? 'expanded' : 'collapsed'"
+            style="overflow: hidden">
+    </mat-row>
+</mat-table>
+</div>
