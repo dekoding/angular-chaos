@@ -43,11 +43,14 @@ import {
     MatTreeModule
 } from '@angular/material';
 
+import { DeferLoadModule } from '@trademe/ng-defer-load';
+
 import { HeaderComponent } from './components/header/header.component';
 import { ChaosTableComponent } from './components/chaos-table/chaos-table.component';
 import { MoochStatsTableComponent } from './components/mooch-stats-table/mooch-stats-table.component';
 import { DefinitionsTableComponent } from './components/definitions-table/definitions-table.component';
 import { MoochCalculatorComponent } from './components/mooch-calculator/mooch-calculator.component';
+import { DetailComponent } from './components/chaos-table/detail/detail.component';
 
 @NgModule({
     declarations: [
@@ -56,7 +59,8 @@ import { MoochCalculatorComponent } from './components/mooch-calculator/mooch-ca
         ChaosTableComponent,
         MoochStatsTableComponent,
         DefinitionsTableComponent,
-        MoochCalculatorComponent
+        MoochCalculatorComponent,
+        DetailComponent
     ],
     imports: [
         BrowserModule,
@@ -96,8 +100,10 @@ import { MoochCalculatorComponent } from './components/mooch-calculator/mooch-ca
         MatTabsModule,
         MatToolbarModule,
         MatTooltipModule,
-        MatTreeModule
+        MatTreeModule,
+        DeferLoadModule
     ],
+    entryComponents: [DetailComponent],
     providers: [],
     bootstrap: [AppComponent]
 })

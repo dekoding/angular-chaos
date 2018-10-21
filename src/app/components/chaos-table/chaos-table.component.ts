@@ -1,40 +1,34 @@
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
-import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef } from '@angular/material';
 
 import { Chaos } from '../../interfaces/chaos';
 import { DataService } from '../../services/data.service';
 
+import { DetailComponent } from './detail/detail.component';
+
 @Component({
     selector: 'app-chaos-table',
     templateUrl: './chaos-table.component.html',
-    styleUrls: ['./chaos-table.component.css'],
-    animations: [
-        trigger('detailExpand', [
-            state('collapsed', style({ height: '0px', minHeight: '0', display: 'none' })),
-            state('expanded', style({ height: '*' })),
-            transition('expanded <=> collapsed', animate('225ms cubic-bezier(0.4, 0.0, 0.2, 1)'))
-        ]),
-    ],
+    styleUrls: ['./chaos-table.component.css']
 })
-export class ChaosTableComponent implements OnInit {
+export class ChaosTableComponent {
     constructor(
+        public dialog: MatDialog,
         public data: DataService
     ) {
         this.data.getDepartures()
             .subscribe(results => {
-                results.forEach(element => this.list.push(element, { detailRow: true, element }));
+                results.forEach(element => this.list.push(element));
                 this.data.dataSource = new MatTableDataSource<any>(this.list);
+                this.data.dataSource.sort = this.sort;
+                this.data.dataSource.paginator = this.paginator;
             });
     }
 
-    ngOnInit() {
-        this.data.dataSource.sort = this.sort;
-    }
-
     @ViewChild(MatSort) sort: MatSort;
+    @ViewChild(MatPaginator) paginator: MatPaginator;
 
     list:any[] = [];
 
@@ -52,4 +46,11 @@ export class ChaosTableComponent implements OnInit {
 
     isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
     expandedElement: any;
+
+    openDialog(element: Chaos): void {
+        const dialogRef = this.dialog.open(DetailComponent, {
+            width: '80%',
+            data: element
+        });
+    }
 }
