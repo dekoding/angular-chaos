@@ -1,8 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { MatPaginator, MatTableDataSource } from '@angular/material';
+import { MatPaginator, MatTableDataSource, MatSort } from '@angular/material';
 
 import { Chaos } from '../../interfaces/chaos';
 import { DataService } from '../../services/data.service';
@@ -19,17 +19,22 @@ import { DataService } from '../../services/data.service';
         ]),
     ],
 })
-export class ChaosTableComponent {
+export class ChaosTableComponent implements OnInit {
     constructor(
         public data: DataService
     ) {
         this.data.getDepartures()
             .subscribe(results => {
-
                 results.forEach(element => this.list.push(element, { detailRow: true, element }));
                 this.data.dataSource = new MatTableDataSource<any>(this.list);
             });
     }
+
+    ngOnInit() {
+        this.data.dataSource.sort = this.sort;
+    }
+
+    @ViewChild(MatSort) sort: MatSort;
 
     list:any[] = [];
 
