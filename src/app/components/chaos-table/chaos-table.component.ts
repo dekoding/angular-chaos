@@ -24,6 +24,26 @@ export class ChaosTableComponent {
                 this.data.dataSource = new MatTableDataSource<any>(this.list);
                 this.data.dataSource.sort = this.sort;
                 this.data.dataSource.paginator = this.paginator;
+                this.data.dataSource.filterPredicate = (data: Chaos, filter: string) => {
+                    let match = false;
+                    Object.entries(data).forEach(([key, value]) => {
+                        if (
+                            key !== 'Notes' &&
+                            value.toString().toLowerCase().includes(filter.toLowerCase())
+                        ) {
+                            match = true;
+                        }
+                    });
+                    return match;
+                    /* let match = false;
+                    if (data.FirstName.toLowerCase().includes(filter.toLowerCase()) ||
+                        data.LastName.toLowerCase().includes(filter.toLowerCase()) ||
+                        data.Affiliation.toLowerCase().includes(filter.toLowerCase()) ||
+                        data.Position.toLowerCase().includes(filter.toLowerCase())) {
+                        match = true;
+                    }
+                    return match; */
+                };
             });
     }
 
