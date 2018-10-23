@@ -1,6 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 import { HttpClientModule } from '@angular/common/http';
 import { NgModule } from '@angular/core';
+import { RouterModule, Routes } from '@angular/router';
 
 import { AppComponent } from './app.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -51,6 +52,14 @@ import { MoochStatsTableComponent } from './components/mooch-stats-table/mooch-s
 import { DefinitionsTableComponent } from './components/definitions-table/definitions-table.component';
 import { MoochCalculatorComponent } from './components/mooch-calculator/mooch-calculator.component';
 import { DetailComponent } from './components/chaos-table/detail/detail.component';
+import { FooterComponent } from './components/footer/footer.component';
+
+const appRoutes: Routes = [
+    { path: 'keys', component: DefinitionsTableComponent },
+    { path: 'mooches', component: MoochCalculatorComponent },
+    { path: 'stats', component: MoochStatsTableComponent },
+    { path: '', component: ChaosTableComponent }
+];
 
 @NgModule({
     declarations: [
@@ -60,7 +69,8 @@ import { DetailComponent } from './components/chaos-table/detail/detail.componen
         MoochStatsTableComponent,
         DefinitionsTableComponent,
         MoochCalculatorComponent,
-        DetailComponent
+        DetailComponent,
+        FooterComponent
     ],
     imports: [
         BrowserModule,
@@ -101,7 +111,8 @@ import { DetailComponent } from './components/chaos-table/detail/detail.componen
         MatToolbarModule,
         MatTooltipModule,
         MatTreeModule,
-        DeferLoadModule
+        DeferLoadModule,
+        RouterModule.forRoot(appRoutes)
     ],
     entryComponents: [DetailComponent],
     providers: [],
