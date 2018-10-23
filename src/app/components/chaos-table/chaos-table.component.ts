@@ -1,4 +1,4 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild, OnInit } from '@angular/core';
 import { DataSource } from '@angular/cdk/collections';
 import { Observable, of } from 'rxjs';
 import { MatPaginator, MatTableDataSource, MatSort, MatDialog, MatDialogRef } from '@angular/material';
@@ -13,11 +13,13 @@ import { DetailComponent } from './detail/detail.component';
     templateUrl: './chaos-table.component.html',
     styleUrls: ['./chaos-table.component.css']
 })
-export class ChaosTableComponent {
+export class ChaosTableComponent implements OnInit {
     constructor(
         public dialog: MatDialog,
         public data: DataService
-    ) {
+    ) { }
+
+    ngOnInit() {
         this.data.getDepartures()
             .subscribe(results => {
                 results.forEach(element => this.list.push(element));
@@ -35,14 +37,6 @@ export class ChaosTableComponent {
                         }
                     });
                     return match;
-                    /* let match = false;
-                    if (data.FirstName.toLowerCase().includes(filter.toLowerCase()) ||
-                        data.LastName.toLowerCase().includes(filter.toLowerCase()) ||
-                        data.Affiliation.toLowerCase().includes(filter.toLowerCase()) ||
-                        data.Position.toLowerCase().includes(filter.toLowerCase())) {
-                        match = true;
-                    }
-                    return match; */
                 };
             });
     }
@@ -53,15 +47,15 @@ export class ChaosTableComponent {
     list:any[] = [];
 
     displayedColumns = [
-        'name',
-        'affiliation',
-        'position',
-        'hired',
-        'left',
-        'totalDays',
-        'daysUnderTrump',
-        'mooches',
-        'firedOrResigned'
+        'LastName',
+        'Affiliation',
+        'Position',
+        'DateHired',
+        'DateLeft',
+        'TotalTime',
+        'TrumpTime',
+        'MoochesTime',
+        'LeaveType'
     ];
 
     isExpansionDetailRow = (i: number, row: Object) => row.hasOwnProperty('detailRow');
