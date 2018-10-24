@@ -2,8 +2,8 @@
     <section class="mat-typography">
         <h1 class="mat-display-1">How Many Mooches?</h1>
         <p>Calculate a Time in Mooches!</p>
-        <div style="text-align:center">
-            <mat-form-field class="mooch-calculator">
+        <div class="mooch-calculator">
+            <mat-form-field>
                 <input matInput [matDatepicker]="picker" (dateInput)="getMooches($event)" placeholder="Select a Date">
                 <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
                 <mat-datepicker #picker></mat-datepicker>

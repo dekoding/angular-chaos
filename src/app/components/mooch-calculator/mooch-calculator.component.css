@@ -34,4 +34,8 @@ mat-grid-tile {
     text-align: center;
     background: #f7f7ff;
     padding: 15px;
+    margin-left: auto;
+    margin-right: auto;
+    max-width: max-content;
+    border-radius: 6px;
 }
