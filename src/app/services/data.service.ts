@@ -5,7 +5,7 @@ import { map } from 'rxjs/operators';
 import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import { Chaos } from '../interfaces/chaos';
-
+import { Definition } from '../interfaces/definition';
 
 @Injectable({
     providedIn: 'root'
@@ -21,5 +21,22 @@ export class DataService {
     getDepartures():Observable<Chaos[]> {
         return this.http.get('https://dev.45chaos.com/api/departures')
             .pipe(map((response: Chaos[]) => response));
+    }
+
+    getDefinitions():Observable<Definition[]> {
+        return this.http.get('https://dev.45chaos.com/api/definitions')
+            .pipe(map((response:any[]) => {
+                const result:Definition[] = [];
+                const keys:string[] = Object.keys(response);
+
+                keys.forEach(key => {
+                    const label = key;
+                    const explanation = response[key];
+
+                    result.push({ label, explanation });
+                });
+
+                return result;
+            }));
     }
 }

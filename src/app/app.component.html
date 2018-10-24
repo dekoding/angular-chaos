@@ -1,15 +1,14 @@
-<!--The content below is only a placeholder and can be replaced.-->
 <app-header style="z-index: 10000"></app-header>
-<div class="main-image">
+<!-- <div class="main-image">
     <section class="mat-typography">
         <h1 class="mat-display-1">Departures and Nominations</h1>
         <p>Search for Trump administration departures</p>
     </section>
 </div>
-<div class="search-container">
+<div class="search-container" *ngIf="showSearch">
     <mat-form-field color="primary">
         <input matInput (keyup)="applyFilter($event.target.value)" placeholder="Type in a Name and Go!">
     </mat-form-field>
-</div>
+</div> -->
 <router-outlet></router-outlet>
 <app-footer></app-footer>

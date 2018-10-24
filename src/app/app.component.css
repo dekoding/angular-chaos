@@ -1,4 +1,4 @@
-.main-image {
+/* .main-image {
     padding-top: 30px;
     box-shadow: inset 0 0 0 1000px rgba(15,59,97,.9);
     background-image: url(../assets/images/whiteHouse.jpg);
@@ -12,8 +12,6 @@
     font-family: fjalla one,sans-serif;
     color: #0194c9;
     font-size: 56px;
-    /*line-height: 1.2em;
-    padding: 40px;*/
 }
 
 .main-image h1, .main-image p {
@@ -25,7 +23,6 @@
     font-size: 1.5rem;
     font-weight: 100;
     line-height: 1em;
-    /* padding: 1rem 0 2rem; */
 }
 
 .search-container {
@@ -35,4 +32,4 @@
     padding: 3px;
     margin-left: auto;
     margin-right: auto;
-}
+} */

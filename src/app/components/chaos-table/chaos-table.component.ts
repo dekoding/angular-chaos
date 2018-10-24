@@ -67,4 +67,8 @@ export class ChaosTableComponent implements OnInit {
             data: element
         });
     }
+
+    applyFilter(filterValue:string) {
+        this.data.dataSource.filter = filterValue.trim().toLowerCase();
+    }
 }
