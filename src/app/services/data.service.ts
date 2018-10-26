@@ -6,6 +6,7 @@ import { MatPaginator, MatTableDataSource } from '@angular/material';
 
 import { Chaos } from '../interfaces/chaos';
 import { Definition } from '../interfaces/definition';
+import { Stat } from '../interfaces/stat';
 
 @Injectable({
     providedIn: 'root'
@@ -38,5 +39,10 @@ export class DataService {
 
                 return result;
             }));
+    }
+
+    getStats():Observable<Stat> {
+        return this.http.get('https://dev.45chaos.com/api/stats')
+            .pipe(map((response: Stat) => response));
     }
 }
