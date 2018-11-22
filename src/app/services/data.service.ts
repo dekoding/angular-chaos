@@ -17,15 +17,20 @@ export class DataService {
         public http: HttpClient
     ) { }
 
+    baseUrl:string = 'https://dev.45chaos.com';
+    departures:string = `${this.baseUrl}/api/departures`;
+    definitions:string = `${this.baseUrl}/api/definitions`;
+    stats:string = `${this.baseUrl}/api/stats`;
+
     dataSource:MatTableDataSource<any>;
 
     getDepartures():Observable<Chaos[]> {
-        return this.http.get('https://dev.45chaos.com/api/departures')
+        return this.http.get(this.departures)
             .pipe(map((response: Chaos[]) => response));
     }
 
     getDefinitions():Observable<Definition[]> {
-        return this.http.get('https://dev.45chaos.com/api/definitions')
+        return this.http.get(this.definitions)
             .pipe(map((response:any[]) => {
                 const result:Definition[] = [];
                 const keys:string[] = Object.keys(response);
@@ -42,7 +47,7 @@ export class DataService {
     }
 
     getStats():Observable<Stat> {
-        return this.http.get('https://dev.45chaos.com/api/stats')
+        return this.http.get(this.stats)
             .pipe(map((response: Stat) => response));
     }
 }

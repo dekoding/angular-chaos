@@ -14,11 +14,28 @@ import { Chart } from 'chart.js';
 })
 export class MoochStatsTableComponent implements OnInit {
     @ViewChild('leaveChart') leaveChartElem: ElementRef;
+    @ViewChild('affiliationsChart') affiliationsChartElem: ElementRef;
 
     constructor(
         public renderer: Renderer2,
         public data: DataService
     ) { }
+
+    getRandomColors(count:number) {
+        const letters:string = '0123456789ABCDEF';
+
+        const colors:string[] = [];
+
+        for (let a = 0; a < count; a++) {
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            colors.push(color);
+        }
+
+        return(colors);
+    }
 
     charts = {
         leaveTypes: Chart,
@@ -30,30 +47,8 @@ export class MoochStatsTableComponent implements OnInit {
             config: {
         		type: 'pie',
         		data: {
-        			datasets: [/* {
-        				data: [
-        					randomScalingFactor(),
-        					randomScalingFactor(),
-        					randomScalingFactor(),
-        					randomScalingFactor(),
-        					randomScalingFactor(),
-        				],
-        				backgroundColor: [
-        					/* window.chartColors.red,
-        					window.chartColors.orange,
-        					window.chartColors.yellow,
-        					window.chartColors.green,
-        					window.chartColors.blue,
-        				],
-        				label: 'Leave Types'
-        			} */],
-        			labels: [
-        				/* 'Red',
-        				'Orange',
-        				'Yellow',
-        				'Green',
-        				'Blue' */
-        			]
+        			datasets: [],
+        			labels: []
         		},
         		options: {
         			responsive: true
@@ -90,7 +85,7 @@ export class MoochStatsTableComponent implements OnInit {
                 const leaveTypesData = {
                     data: [],
     				backgroundColor: ['red','blue','yellow','green'],
-    				label: 'Leave Types'
+    				label: 'By Leave Types'
                 };
 
                 const leaveTypesLabels = [];
@@ -104,10 +99,26 @@ export class MoochStatsTableComponent implements OnInit {
                 this.chartOptions.leaveTypes.config.data.labels = leaveTypesLabels;
 
                 const ctx = this.leaveChartElem.nativeElement.getContext('2d');
-                console.log(this.chartOptions.leaveTypes.config);
 
-                this.charts.leaveTypes = new Chart(this.leaveChartElem.nativeElement, this.chartOptions.leaveTypes.config)
+                this.charts.leaveTypes = new Chart(this.leaveChartElem.nativeElement, this.chartOptions.leaveTypes.config);
 
+                const affiliationsData = {
+                    data: [],
+                    backgroundColor: this.getRandomColors(results.affiliationStats.length),
+                    label: 'By Affiliation'
+                };
+
+                const affiliationsLabels = [];
+
+                results.affiliationStats.forEach(entry => {
+                    affiliationsData.data.push(entry.count);
+                    affiliationsLabels.push(entry.label);
+                });
+
+                this.chartOptions.affiliations.config.data.datasets.push(affiliationsData);
+                this.chartOptions.affiliations.config.data.labels = affiliationsLabels;
+
+                this.charts.affiliations = new Chart(this.affiliationsChartElem.nativeElement, this.chartOptions.affiliations.config);
             });
     }
 
