@@ -1,6 +1,17 @@
-<div style="width:40%;">
+<mat-card class="stat-card">
+  <mat-card-header>
+    <mat-card-title>Departures By Type</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
     <canvas #leaveChart></canvas>
-</div>
-<div style="width:60%;">
-    <canvas #affiliationsChart></canvas>
-</div>
+  </mat-card-content>
+</mat-card>
+
+<mat-card class="stat-card">
+  <mat-card-header>
+    <mat-card-title>Departures By Affiliation</mat-card-title>
+  </mat-card-header>
+  <mat-card-content>
+        <canvas #affiliationsChart height="400px"></canvas>
+  </mat-card-content>
+</mat-card>

@@ -7,6 +7,13 @@ import { Stat, StatEntry } from '../../interfaces/stat';
 import { DataService } from '../../services/data.service';
 import { Chart } from 'chart.js';
 
+const labelKeys:Object = {
+    'R': 'Resigned',
+    'R-UP': 'Resigned - Under Pressure',
+    'F': 'Fired',
+    '?': 'Unknown'
+};
+
 @Component({
     selector: 'app-mooch-stats-table',
     templateUrl: './mooch-stats-table.component.html',
@@ -57,13 +64,16 @@ export class MoochStatsTableComponent implements OnInit {
         },
         affiliations: {
             config: {
-        		type: 'pie',
+        		type: 'horizontalBar',
         		data: {
         			datasets: [],
         			labels: []
         		},
         		options: {
-        			responsive: true
+        			responsive: true,
+                    legend: {
+                        display: false
+                    }
         		}
         	}
         }
@@ -73,8 +83,6 @@ export class MoochStatsTableComponent implements OnInit {
 
     leaveTypes:StatEntry[] = [];
     affiliations:StatEntry[] = [];
-
-
 
     ngOnInit() {
         this.data.getStats()
@@ -92,20 +100,20 @@ export class MoochStatsTableComponent implements OnInit {
 
                 results.leaveTypes.forEach(entry => {
                     leaveTypesData.data.push(entry.count);
-                    leaveTypesLabels.push(entry.label);
+                    leaveTypesLabels.push(labelKeys[entry.label]);
                 });
 
                 this.chartOptions.leaveTypes.config.data.datasets.push(leaveTypesData);
                 this.chartOptions.leaveTypes.config.data.labels = leaveTypesLabels;
 
-                const ctx = this.leaveChartElem.nativeElement.getContext('2d');
+                const ctxLeaveTypes = this.leaveChartElem.nativeElement.getContext('2d');
+                ctxLeaveTypes.height = 400;
 
                 this.charts.leaveTypes = new Chart(this.leaveChartElem.nativeElement, this.chartOptions.leaveTypes.config);
 
                 const affiliationsData = {
                     data: [],
                     backgroundColor: this.getRandomColors(results.affiliationStats.length),
-                    label: 'By Affiliation'
                 };
 
                 const affiliationsLabels = [];
@@ -118,8 +126,11 @@ export class MoochStatsTableComponent implements OnInit {
                 this.chartOptions.affiliations.config.data.datasets.push(affiliationsData);
                 this.chartOptions.affiliations.config.data.labels = affiliationsLabels;
 
+
+                const ctxAffiliations = this.affiliationsChartElem.nativeElement.getContext('2d');
+                ctxLeaveTypes.height = 800;
+
                 this.charts.affiliations = new Chart(this.affiliationsChartElem.nativeElement, this.chartOptions.affiliations.config);
             });
     }
-
 }
